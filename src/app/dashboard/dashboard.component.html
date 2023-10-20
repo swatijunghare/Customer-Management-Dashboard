@@ -1,0 +1,48 @@
+<div class="container mt-5">
+    <h2 class="text-center">Customer Dashboard</h2>
+    <div class="row my-3">
+      <div class="col-md-12">
+        <input type="text" [(ngModel)]="filteredData" placeholder="Search by First Name" class="form-control" />
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Email</th>
+                <th>Phone Number</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let customer of customers | filter:filteredData | paginate:{itemsPerPage:2,currentPage:p,totalItems:totalLength};">
+              <tr>
+                <td>{{ customer.firstName }}</td>
+                <td>{{ customer.lastName }}</td>
+                <td>{{ customer.email }}</td>
+                <td>{{ customer.phoneNumber }}</td>
+                <td>
+                  <button class="btn btn-primary me-2" [routerLink]="['/add_edit_customer', customer.id]">Edit</button>
+                  <button class="btn btn-danger" (click)="deleteCustomers(customer)">Delete</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+    <div class="row my-3">
+      <div class="col-md-12 d-flex justify-content-center">
+        <pagination-controls (pageChange)="p =$event"></pagination-controls>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-md-12 d-grid gap-2">
+        <button class="btn btn-success" [routerLink]="['/add_edit_customer']">Add Customer</button>
+      </div>
+    </div>
+  </div>
+  
